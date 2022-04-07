@@ -1,0 +1,62 @@
+main {
+  margin: 0.5rem;
+}
+@media (min-width: 768px) {
+  main {
+    margin: 0.5rem auto;
+    width: calc(768px - 1rem);
+  }
+}
+
+#input-wrap {
+  position: relative;
+}
+#input {
+  overflow: hidden;
+  resize: none;
+  font-size: inherit;
+  font-size: 2rem;
+}
+#input-faux {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  font-size: 2rem;
+}
+@media (-webkit-min-device-pixel-ratio: 1.1) {
+  #input, #input-faux {
+    font-size: 1.5rem;
+  }
+}
+#input-floater-wrap {
+  display: inline-block;
+  position: relative;
+}
+#input-floater {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: calc(-0.25em - 1px);
+  background: var(--bs-light);
+  visibility: hidden;
+  user-select: none;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 16%);
+  line-height: 1;
+  opacity: 0;
+  transition-property: visibility, opacity, top;
+  transition-duration: 0.2s;
+}
+#input-floater.visible {
+  top: 100%;
+  visibility: visible;
+  opacity: 1;
+}
+#input-floater-comp {
+  font-size: 1rem;
+}
