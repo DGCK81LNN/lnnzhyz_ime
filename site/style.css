@@ -39,7 +39,7 @@ main {
   display: block;
   position: absolute;
   top: 0;
-  left: calc(-0.25em - 1px);
+  left: calc(-0.25rem - 1px);
   background: var(--bs-light);
   visibility: hidden;
   user-select: none;
