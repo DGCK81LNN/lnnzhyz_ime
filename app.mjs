@@ -15,6 +15,12 @@ const $inputFloaterComp = $$$("input-floater-comp")
 /** @type {HTMLInputElement} */
 const $toggle = $$$("toggle")
 
+/**
+ * Suspend handling of `selectionchange` and `beforeinput` events to prevent
+ * emulated input emitting events and causing infinite recursion.
+ */
+let suspended = false
+
 //#region autoresize
 
 function autoResize() {
@@ -72,8 +78,10 @@ function deleteChar(forward) {
   if (anchor === focus) {
     focus += forward ? 1 : -1
     focus = findBoundary($input.value, focus, forward ? "right" : "left")
+    suspended = true
     setAnchorFocus(anchor, focus)
     document.execCommand("delete") || insertText("")
+    suspended = false
     return true
   }
   return false
@@ -112,7 +120,7 @@ $input.addEventListener("keydown", ev => {
 })
 
 document.addEventListener("selectionchange", () => {
-  if (hasFocus) autoCorrectSelection()
+  if (!suspended && hasFocus) autoCorrectSelection()
 })
 
 //#endregion
@@ -121,8 +129,10 @@ document.addEventListener("selectionchange", () => {
 
 function insertText(text) {
   $input.focus()
+  suspended = true
   document.execCommand("insertText", false, text) ||
     $input.setRangeText(text, $input.selectionStart, $input.selectionEnd, "end")
+  suspended = false
   caretPos = $input.selectionStart
 }
 
@@ -195,7 +205,7 @@ $input.addEventListener("blur", () => {
 })
 
 document.addEventListener("selectionchange", () => {
-  if (enabled && $input.selectionStart !== caretPos) abortComp()
+  if (enabled && !suspended && $input.selectionStart !== caretPos) abortComp()
 })
 
 var onlyShift = false
@@ -234,7 +244,7 @@ $input.addEventListener("keyup", ev => {
 })
 
 $input.addEventListener("beforeinput", ev => {
-  if (!enabled || ev.inputType !== "insertText") return
+  if (!enabled || suspended || ev.inputType !== "insertText") return
   ev.preventDefault()
   comp += ev.data
   caretPos = $input.selectionStart
