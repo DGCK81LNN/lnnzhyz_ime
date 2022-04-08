@@ -27,12 +27,12 @@ export function scanRoman(str: string) {
       return {
         end: i,
         result: table[sub],
-        fine: !tableKeys.some(key => key !== sub && key.startsWith(sub)),
+        fine: !tableKeys.some(key => key !== sub && key.startsWith(str)),
       }
   }
   return {
     end: 0,
     result: null,
-    fine: !tableKeys.some(key => key !== str[0] && key.startsWith(str[0])),
+    fine: !tableKeys.some(key => key.startsWith(str)),
   }
 }
