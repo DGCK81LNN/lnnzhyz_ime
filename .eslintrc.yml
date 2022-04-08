@@ -9,4 +9,6 @@ parserOptions:
   ecmaVersion: latest
 plugins:
   - '@typescript-eslint'
+ignorePatterns:
+  - 'site/'
 rules: {}
