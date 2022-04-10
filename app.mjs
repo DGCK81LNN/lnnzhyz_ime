@@ -5,6 +5,12 @@ function $$$(id) {
   return document.getElementById(id)
 }
 
+if (/^iP|^Mac/.test(navigator.platform)) {
+  try {
+    document.querySelector("meta[name=viewport]").content += ",user-scalable=no"
+  } catch (_) { }
+}
+
 /** @type {HTMLTextAreaElement} */
 const $input = $$$("input")
 const $inputFaux = $$$("input-faux")
