@@ -1,10 +1,11 @@
-name: Build and deploy
+name: Build and deploy to Github Pages
 on:
   push:
     branches: [ main ]
   workflow_dispatch: { }
 jobs:
-  esbuild:
+  pages:
+    if: ${{ !(github.event_name == 'push' && github.run_attempt == 1 && contains(github.event.head_commit.message, '@@__LNN_NO_BUILD__@@')) }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
