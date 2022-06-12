@@ -66,7 +66,7 @@ const vowels = ["e", "a", "o", "eh"]
 const codas = ["i", "u", "n", "ng", "r"]
 
 function getTone(str: string) {
-  if (!str || inList(str, "0 1 l s")) return 1
+  if (!str || inList(str, "0 1 w")) return 1
   if (inList(str, "2 z")) return 2
   if (inList(str, "3 x")) return 3
   if (inList(str, "4 h")) return 4
@@ -116,7 +116,7 @@ export class Syllable {
 
     if (inList(initial, "ng w")) initial = ""
 
-    s.scan("0 1 2 3 4 l z x h s")
+    s.scan("0 1 2 3 4 w z x h")
     const fine = !!s.scanned || str.length > s.scanPos
     const tone = getTone(s.scanned)
 
