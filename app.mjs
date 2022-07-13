@@ -84,10 +84,8 @@ function deleteChar(forward) {
   if (anchor === focus) {
     focus += forward ? 1 : -1
     focus = findBoundary($input.value, focus, forward ? "right" : "left")
-    suspended = true
     setAnchorFocus(anchor, focus)
-    document.execCommand("delete") || insertText("")
-    suspended = false
+    insertText("")
     return true
   }
   return false
